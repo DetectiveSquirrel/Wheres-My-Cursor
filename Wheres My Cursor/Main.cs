@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExileCore;
-using ExileCore.PoEMemory.MemoryObjects;
-using ExileCore.Shared.Helpers;
+﻿using ExileCore;
 using SharpDX;
+using System.Linq;
 using Wheres_My_Cursor.libs;
 
 namespace Wheres_My_Cursor
@@ -28,16 +22,24 @@ namespace Wheres_My_Cursor
 
         private void WheresMyCursor()
         {
-            if (!Settings.Enable) return;
+            if (!Settings.Enable)
+                return;
+
             var windows = GameController.Game.IngameState.IngameUi;
+
             if (windows.TreePanel.IsVisible)
                 return;
-            if (windows.AtlasPanel.IsVisible)
+            if (windows.Atlas.IsVisible)
+                return;
+            if (windows.SyndicatePanel.IsVisible)
+                return;
+            if (windows.AtlasTreePanel.IsVisible)
                 return;
             if (windows.OpenLeftPanel.IsVisible)
                 return;
             if (windows.OpenRightPanel.IsVisible)
                 return;
+
             var cursorPositionVector = Mouse.GetCursorPositionVector();
             var windowRectangle = GameController.Window.GetWindowRectangleReal();
             _clickWindowOffset = GameController.Window.GetWindowRectangle().TopLeft;
@@ -45,7 +47,7 @@ namespace Wheres_My_Cursor
 
             // need to call use -170 in Z axis for player.pos.translate as this is whats used in poecore for hp bar.
             //i have no fucking clue why this is. If you do not follow this rule you will have a jumpy hp bar
-            var playerToScreen = GameState.pTheGame.IngameState.Camera.WorldToScreen(GameController.Player.Pos.Translate(0, 0, -170));
+            //var playerToScreen = ExileCore.PoEMemory.RemoteMemoryObject.pTheGame.IngameState.Camera.WorldToScreen(GameController.Player.PosNum.Translate(0, 0, -170));
             Vector2 finalPointA;
             switch (Settings.WmcLineType)
             {
