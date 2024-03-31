@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExileCore;
-using ExileCore.Shared.Interfaces;
+﻿using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
 using SharpDX;
 
@@ -15,7 +9,7 @@ namespace Wheres_My_Cursor
 
         public Settings()
         {
-            WmcLineType = new RangeNode<int>(1, 1, 3);
+            WmcLineType = new RangeNode<int>(1, 0, 2);
             WmcLineColor = new Color(255, 255, 255, 255);
             WmcLineLength = new RangeNode<int>(200, 1, 1000);
             WmcLineSize = new RangeNode<int>(1, 1, 10);

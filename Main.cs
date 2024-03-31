@@ -55,21 +55,21 @@ public class Main : BaseSettingsPlugin<Settings>
             return;
         }
 
-        var cursorPositionVector = Mouse.GetCursorPositionVector().ToVector2Num();
+        var cursorPositionVector = Mouse.GetCursorPositionVector();
         var windowRectangle = GameController.Window.GetWindowRectangleReal();
         _clickWindowOffset = GameController.Window.GetWindowRectangle().TopLeft;
-        cursorPositionVector -= _clickWindowOffset.ToVector2Num();
+        cursorPositionVector -= _clickWindowOffset;
 
         // need to call use -170 in Z axis for player.pos.translate as this is whats used in poecore for hp bar.
         //i have no fucking clue why this is. If you do not follow this rule you will have a jumpy hp bar
         //var playerToScreen = ExileCore.PoEMemory.RemoteMemoryObject.pTheGame.IngameState.Camera.WorldToScreen(GameController.Player.PosNum.Translate(0, 0, -170));
-        System.Numerics.Vector2 finalPointA;
+        Vector2 finalPointA;
 
         switch (Settings.WmcLineType)
         {
             case 0:
                 finalPointA = Vector2OffsetCalculations(
-                    new System.Numerics.Vector2(windowRectangle.Width / 2, windowRectangle.Height / 2)
+                    new Vector2(windowRectangle.Width / 2, windowRectangle.Height / 2)
                 );
 
                 DrawLineToPosWithLength(
@@ -83,14 +83,14 @@ public class Main : BaseSettingsPlugin<Settings>
                 break;
             case 1:
                 finalPointA = Vector2OffsetCalculations(
-                    new System.Numerics.Vector2(windowRectangle.Width / 2, windowRectangle.Height / 2)
+                    new Vector2(windowRectangle.Width / 2, windowRectangle.Height / 2)
                 );
 
                 DrawLineToPos(finalPointA, cursorPositionVector, Settings.WmcLineSize, Settings.WmcLineColor);
                 break;
             case 2:
                 finalPointA = Vector2OffsetCalculations(
-                    new System.Numerics.Vector2(windowRectangle.Width / 2, windowRectangle.Height / 2)
+                    new Vector2(windowRectangle.Width / 2, windowRectangle.Height / 2)
                 );
 
                 DrawLineToPosWithLength(
@@ -105,7 +105,7 @@ public class Main : BaseSettingsPlugin<Settings>
         }
     }
 
-    public System.Numerics.Vector2 Vector2OffsetCalculations(System.Numerics.Vector2 information)
+    public Vector2 Vector2OffsetCalculations(Vector2 information)
     {
         var finalVectorCalculation = information;
 
@@ -120,18 +120,16 @@ public class Main : BaseSettingsPlugin<Settings>
         return finalVectorCalculation;
     }
 
-    public void DrawLineToPosWithLength(System.Numerics.Vector2 pointA, System.Numerics.Vector2 pointB, int lineLength,
-        int lineSize, Color lineColor)
+    public void DrawLineToPosWithLength(Vector2 pointA, Vector2 pointB, int lineLength, int lineSize, Color lineColor)
     {
         var direction = pointB - pointA;
-        direction.ToSharpDx().Normalize();
+        direction.Normalize();
         var pointC = pointA + direction * lineLength;
-        Graphics.DrawLine(pointA, pointC, lineSize, lineColor);
+        Graphics.DrawLine(pointA.ToVector2Num(), pointC.ToVector2Num(), lineSize, lineColor);
     }
 
-    public void DrawLineToPos(System.Numerics.Vector2 pointA, System.Numerics.Vector2 pointB, int lineSize,
-        Color lineColor)
+    public void DrawLineToPos(Vector2 pointA, Vector2 pointB, int lineSize, Color lineColor)
     {
-        Graphics.DrawLine(pointA, pointB, lineSize, lineColor);
+        Graphics.DrawLine(pointA.ToVector2Num(), pointB.ToVector2Num(), lineSize, lineColor);
     }
 }
