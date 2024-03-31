@@ -35,6 +35,9 @@
       <HintPath>..\..\..\..\ExileCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ImGui.NET">
+      <HintPath>..\..\..\..\ImGui.NET.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX">
       <HintPath>..\..\..\..\SharpDX.dll</HintPath>
       <Private>False</Private>
